@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.paypal.csdmp</groupId>
+    <artifactId>Structured-Pipeline</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>sp-common</module>
+        <module>sp-core</module>
+        <module>sp-ext</module>
+        <module>sp-launch</module>
+        <module>sp-aiml</module>
+        <module>sp-adaptor</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.sourceEncoding>UTF-8</project.reporting.sourceEncoding>
+        <avro.version>1.8.2</avro.version>
+        <hadoop.common.version>2.8.5</hadoop.common.version>
+
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <avro.version>1.8.2</avro.version>
+        <hadoop.common.version>2.8.5</hadoop.common.version>
+        <teradata.version>16.20.00.10</teradata.version>
+        <scoverage.plugin.version>1.4.0</scoverage.plugin.version>
+        <sp.main.version>1.2.6</sp.main.version>
+        <sp.adaptor.version>1.2.2</sp.adaptor.version>
+        <sp.ext.verison>1.2.5</sp.ext.verison>
+        <sp.aiml.verison>1.2.5</sp.aiml.verison>
+        <sp.test.verison>1.2.1</sp.test.verison>
+        <sp.scope>provided</sp.scope>
+        <sp.test.scope>test</sp.test.scope>
+        <execute.shading>package</execute.shading>
+        <scalafmt.skip>true</scalafmt.skip>
+        <releaseUrl></releaseUrl>
+        <snapshotUrl></snapshotUrl>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>raptor.release</id>
+            <url>${releaseUrl}</url>
+        </repository>
+        <snapshotRepository>
+            <id>raptor.snapshot</id>
+            <url>${snapshotUrl}</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>spark3</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spark.version>3.0.0</spark.version>
+                <scala.version>2.12.10</scala.version>
+                <scala.binary.version>2.12</scala.binary.version>
+                <json4s.version>3.7.0-M2</json4s.version>
+                <scopt.version>3.5.0</scopt.version>
+            </properties>
+            <modules>
+                <module>sp-adaptor/sp-adaptor_2.12</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>spark2</id>
+            <properties>
+                <spark.version>2.3.0</spark.version>
+                <scala.version>2.11.12</scala.version>
+                <scala.binary.version>2.11</scala.binary.version>
+                <json4s.version>3.2.11</json4s.version>
+                <scopt.version>3.2.0</scopt.version>
+            </properties>
+            <modules>
+                <module>sp-adaptor/sp-adaptor_2.11</module>
+            </modules>
+        </profile>
+    </profiles>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.paypal.csdmp</groupId>
+                <artifactId>sp-common</artifactId>
+                <version>${sp.main.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId></groupId>
+                <artifactId></artifactId>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+
+</project>
