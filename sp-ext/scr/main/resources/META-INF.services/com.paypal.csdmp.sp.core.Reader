@@ -1,0 +1,9 @@
+com.paypal.csdmp.sp.ext.input.api.KhorosAPIReader
+com.paypal.csdmp.sp.ext.input.api.SalesforceAPIReader
+com.paypal.csdmp.sp.ext.input.api.TwitterAPIReader
+com.paypal.csdmp.sp.ext.input.api.CommunityAPIReader
+com.paypal.csdmp.sp.ext.input.ExcelReader
+com.paypal.csdmp.sp.ext.input.api.ServiceNowAPIReader
+com.paypal.csdmp.sp.ext.input.OracleSchemaReader
+com.paypal.csdmp.sp.ext.input.KafkaStreamReader
+com.paypal.csdmp.sp.ext.input.KafkaFptiReader
