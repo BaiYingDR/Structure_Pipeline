@@ -1,5 +1,3 @@
 package com.paypal.csdmp.sp.pojo
 
-class Configuration {
-
-}
+case class Offset(generic: Option[Map[String, Any]])
