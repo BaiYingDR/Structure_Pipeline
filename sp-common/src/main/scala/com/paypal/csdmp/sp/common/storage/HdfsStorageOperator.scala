@@ -12,7 +12,7 @@ trait HdfsStorageOperator extends StorageOperatorTrait {
 
   override val readOpt: String => Option[String] = path => HdfsUtils.readOpt(path)
 
-  override val writeContent: (String, String) => Unit = (path, content) => HdfsUtils.overwrite(path, content)
+  override val writeContent: (String, String) => Unit = (path, content) => HdfsUtils.write(path, content)
 
-  override val mkdirIfNotExist: String => Unit = path => HdfsUtils.mkdirIfNotExist(path)
+  override val mkdirIfNotExist: String => Unit = path => mkdirIfNotExist(path)
 }

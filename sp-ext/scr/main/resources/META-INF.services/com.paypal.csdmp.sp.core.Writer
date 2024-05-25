@@ -1,4 +1,0 @@
-com.paypal.csdmp.sp.ext.output.ExcelWriter
-com.paypal.csdmp.sp.ext.output.BigQueryStreamWriter
-com.paypal.csdmp.sp.ext.output.BigQueryStreamMergeWriter
-com.paypal.csdmp.sp.ext.output.BigQueryCronMergeWriter

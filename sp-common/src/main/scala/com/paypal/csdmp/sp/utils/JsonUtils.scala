@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.{DeserializationFeature, JsonNode, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
-import java.util
 import scala.reflect.ClassTag
 
 object JsonUtils {
@@ -17,7 +16,7 @@ object JsonUtils {
     .setSerializationInclusion(Include.NON_ABSENT)
     .registerModule(DefaultScalaModule)
 
-  implicit class obj2Json(obj: AnyRef) {
+  implicit class Obj2Json(obj: AnyRef) {
     def toJson: String = JsonUtils.toJson(obj)
   }
 
@@ -50,7 +49,7 @@ object JsonUtils {
 
   }
 
-  def toJson(obj: AnyRef) = {
+  def toJson(obj: AnyRef): String = {
     mapper.writeValueAsString(obj)
   }
 

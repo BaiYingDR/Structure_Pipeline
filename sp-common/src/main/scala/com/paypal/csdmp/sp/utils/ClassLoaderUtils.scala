@@ -1,6 +1,6 @@
 package com.paypal.csdmp.sp.utils
 
-object ClassLoadUtils {
+object ClassLoaderUtils {
 
   /**
    * get the ClassLoader which load Spark

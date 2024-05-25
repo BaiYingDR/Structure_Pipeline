@@ -2,22 +2,23 @@ package com.paypal.csdmp.sp.utils
 
 import com.google.api.gax.paging.Page
 import com.google.cloud.storage.{Blob, BlobId, BlobInfo, Storage, StorageOptions}
-import org.apache.commons.lang.StringUtils
-import java.io.{InputStream}
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang.{StringUtils => ApacheStringUtils}
+
+import java.io.InputStream
 import java.net.URI
 import java.nio.channels.Channels
 import java.nio.charset.StandardCharsets
-import scala.collection.convert.ImplicitConversions.`iterable AsScalaIterable`
 
 object GcsUtils {
 
   private var storage: Storage = StorageOptions.getDefaultInstance.getService
 
-  def setStorage(storage: Storage) = {
+  def setStorage(storage: Storage): Unit = {
     this.storage = storage
   }
 
-  def cleanDir(path: String) = {
+  def cleanDir(path: String): Unit = {
     val (bucketName, objectName) = getBucketNameAndObjectNameFromPath(path)
     cleanDir(bucketName, objectName)
   }
@@ -25,6 +26,7 @@ object GcsUtils {
   def cleanDir(bucketName: String, objectName: String) = {
     val dir: String = if (objectName.endsWith("/")) objectName else s"$objectName/"
     val blobs: Page[Blob] = storage.list(bucketName, Storage.BlobListOption.prefix(dir))
+    import scala.collection.JavaConversions._
     blobs.iterateAll().foreach(_.delete())
   }
 
@@ -33,14 +35,15 @@ object GcsUtils {
     listDir(bucketName, objectName)
   }
 
-  def listDir(bucketName: String, objectName: String) = {
+  def listDir(bucketName: String, objectName: String): List[String] = {
     val dir: String = if (objectName.endsWith("/")) objectName else s"$objectName/"
     val blobs: Page[Blob] = storage.list(bucketName, Storage.BlobListOption.prefix(dir))
+    import scala.collection.JavaConversions._
     blobs.iterateAll().map(_.getBlobId.toGsUtilUri).toList
   }
 
   def copy(source: String, target: String, delSrc: Boolean = false) = {
-    val src = storage.get(buildBlobId(source))
+    val src: Blob = storage.get(buildBlobId(source))
     src.copyTo(buildBlobId(target))
     if (delSrc) src.delete()
   }
@@ -59,7 +62,7 @@ object GcsUtils {
    * @param path
    * @return
    */
-  def readOpt(path: String) = {
+  def readOpt(path: String): Option[String] = {
     val blobId: BlobId = buildBlobId(path)
     Option(storage.get(blobId)).map(read(_))
   }
@@ -105,7 +108,7 @@ object GcsUtils {
    * @param content
    * @return
    */
-  def write(bucketName: String, objectName: String, content: String) = storage.create(buildBlobInfo(bucketName, objectName), content.getBytes(StandardCharsets.UTF_8))
+  def write(bucketName: String, objectName: String, content: String):Unit = storage.create(buildBlobInfo(bucketName, objectName), content.getBytes(StandardCharsets.UTF_8))
 
   /**
    *
@@ -163,7 +166,7 @@ object GcsUtils {
 
   private def getBucketNameAndObjectNameFromPath(path: String): (String, String) = {
     val uri = URI.create(path)
-    (uri.getHost, StringUtils.stripStart(uri.getPath, "/"))
+    (uri.getHost, ApacheStringUtils.stripStart(uri.getPath, "/"))
   }
 
   def getBucketname(path: String) = {

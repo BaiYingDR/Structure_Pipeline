@@ -14,7 +14,7 @@ object Constant {
    */
   val DATASOURCE_FORMAT_HIVE = "hive"
   val DATASOURCE_FORMAT_BIGQUERY = "org.apache.spark.sql.execution.datasources.bigquery2"
-  val DATASOURCE_FORMAT_KAFAK = "kafka"
+  val DATASOURCE_FORMAT_KAFKA = "kafka"
 
   /**
    * SYMBOL

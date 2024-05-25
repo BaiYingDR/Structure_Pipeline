@@ -1,6 +1,7 @@
 package com.paypal.csdmp.sp.utils
 
 import com.paypal.csdmp.sp.common.log.Logging
+import org.apache.commons.io.IOUtils
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FSDataOutputStream, FileSystem, Path}
 

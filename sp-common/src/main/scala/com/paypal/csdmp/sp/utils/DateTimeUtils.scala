@@ -11,14 +11,14 @@ object DateTimeUtils extends Logging {
     val format = "yyyy-MM-dd HH:mm:ss"
     val dtf: DateTimeFormatter = DateTimeFormatter.ofPattern(format)
     val ldt: LocalDateTime = LocalDateTime.now()
-    dtf.format(ldt)
+    ldt.format(dtf)
   }
 
   def getCurrentUTCTimestampStr: String = {
     val format = "yyyy-MM-dd HH:mm:ss"
     val dtf: DateTimeFormatter = DateTimeFormatter.ofPattern(format)
     val ldt: LocalDateTime = LocalDateTime.now(ZoneId.of("UTC"))
-    dtf.format(ldt)
+    ldt.format(dtf)
   }
 
   def formatStrTimestamp(str: String): String = {
@@ -37,6 +37,5 @@ object DateTimeUtils extends Logging {
     }
   }
 
-  def getEpochTime(ts: LocalDateTime): Long =
-    ts.toEpochSecond(ZoneOffset.UTC)
+  def getEpochTime(ts: LocalDateTime): Long = ts.toEpochSecond(ZoneOffset.UTC)
 }

@@ -39,7 +39,7 @@ object DataFrameUtils extends Logging {
   def convertDFtoString(df: Dataset[Row]): String =
     s"${df.schema.fields.map(_.name).mkString(",")}\n${df.collect().map(_.toString).mkString("\n")}"
 
-  def checkDataType(actualDF: DataFrame, expectedDF: DataFrame) =
+  def checkDataType(actualDF: DataFrame, expectedDF: DataFrame): Unit =
     if (!actualDF.schema.fields.zip(expectedDF.schema.fields).forall {
       case (actualField, expectedField) => actualField.dataType == expectedField.dataType
     })
@@ -58,15 +58,12 @@ object DataFrameUtils extends Logging {
       numPartition = 100
     }
     numPartition
-
   }
 
-  def optimizeRepartition(
-                           dataFrame: DataFrame,
-                           partitionCount: Int,
-                           partitionColumn: Option[String]): Unit = {
+  def optimizeRepartition(dataFrame: DataFrame,
+                          partitionCount: Int,
+                          partitionColumn: Option[String]): DataFrame = {
     val curPartitions: Int = dataFrame.rdd.getNumPartitions
-
     partitionColumn match {
       case Some(partitionColumn) =>
         logInfo(s"adjust partition number tyo $partitionCount from $curPartitions")
@@ -81,7 +78,5 @@ object DataFrameUtils extends Logging {
           dataFrame.repartition(partitionCount)
         }
     }
-
   }
-
 }

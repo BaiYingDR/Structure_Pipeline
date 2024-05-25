@@ -12,7 +12,7 @@ trait GcsStorageOperator extends StorageOperatorTrait {
 
   override val readOpt: String => Option[String] = path => GcsUtils.readOpt(path)
 
-  override val writeContent: (String, String) => Unit = (path, content) => GcsUtils.overwrite(path, content)
+  override val writeContent: (String, String) => Unit = (path, content) => GcsUtils.write(path, content)
 
   override val mkdirIfNotExist: String => Unit = _ => {}
 }

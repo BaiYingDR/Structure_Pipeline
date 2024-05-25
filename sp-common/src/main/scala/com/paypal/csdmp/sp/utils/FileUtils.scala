@@ -1,11 +1,12 @@
 package com.paypal.csdmp.sp.utils
 
 import com.paypal.csdmp.sp.common.log.Logging
+import org.apache.commons.io.IOUtils
 
 import java.io.{File, FileInputStream, FileOutputStream, FileWriter, InputStream}
 import scala.io.Source
 
-object FileUtils extends Logging{
+object FileUtils extends Logging {
 
   def read(path: String): String = Source.fromInputStream(new FileInputStream(path)).mkString
 
@@ -47,10 +48,10 @@ object FileUtils extends Logging{
   }
 
   def write(fileName: String, content: String, appendMode: Boolean): Unit =
-    Using(new FileWriter(fileName, appendMode)(_.append(content)))
+    Using(new FileWriter(fileName, appendMode))(_.append(content))
 
 
-  def write(fileName: String, input: InputStream): Unit = {
+  def write(fileName: String, input: InputStream): Unit = Using.Manager { use =>
     val in = use(input)
     val out = use(new FileOutputStream(fileName))
     logInfo(s"begin to read stream to $fileName")

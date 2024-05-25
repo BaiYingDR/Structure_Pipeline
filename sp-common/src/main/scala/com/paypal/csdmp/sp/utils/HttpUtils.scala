@@ -2,12 +2,12 @@ package com.paypal.csdmp.sp.utils
 
 import com.paypal.csdmp.sp.common.log.Logging
 import com.paypal.csdmp.sp.exception.HttpBadRequestException
-import okhttp3.{FormBody, Headers, MediaType, OkHttpClient, Request, RequestBody, Response, ResponseBody}
+import okhttp3._
 
 import java.net.{InetSocketAddress, Proxy}
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.{HostnameVerifier, SSLContext, SSLSession, SSLSocketFactory, TrustManager, X509TrustManager}
+import javax.net.ssl._
 
 object HttpUtils extends Logging {
 
@@ -81,7 +81,7 @@ object HttpUtils extends Logging {
      * @return
      */
     def doGet(url: String, headers: Map[String, String] = Map.empty): ResponseBody = {
-      implicit import scala.collection.JavaConversions._
+      import scala.collection.JavaConversions._
       val value: Headers = Headers.of(headers)
       doGet(url, value)
     }
@@ -111,12 +111,9 @@ object HttpUtils extends Logging {
      */
     def doPost(url: String, params: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): ResponseBody = {
       val paramsBuilder = new FormBody.Builder()
-      params.foreach {
-        case (key, value) => paramsBuilder.add(key, value)
-      }
+      params.foreach { case (key, value) => paramsBuilder.add(key, value) }
       val requestBuilder: Request.Builder = new Request.Builder().url(url).post(paramsBuilder.build())
-
-      implicit import scala.collection.JavaConversions._
+      import scala.collection.JavaConversions._
       requestBuilder.headers(Headers.of(headers))
       val response: Response = okHttpClient.newCall(requestBuilder.build()).execute()
       if (!response.isSuccessful) {
@@ -128,8 +125,7 @@ object HttpUtils extends Logging {
     def postJson(url: String, params: String, headers: Map[String, String] = Map.empty) = {
       val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), params)
       val builder: Request.Builder = new Request.Builder().url(url).post(requestBody)
-
-      implicit import scala.collection.JavaConversions._
+      import scala.collection.JavaConversions._
       builder.headers(Headers.of(headers))
       val response: Response = okHttpClient.newCall(builder.build()).execute()
       if (!response.isSuccessful) {

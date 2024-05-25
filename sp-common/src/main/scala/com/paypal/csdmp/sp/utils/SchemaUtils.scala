@@ -7,7 +7,7 @@ object SchemaUtils {
 
   implicit class RichSchema(schema: StructType) {
 
-    def toRdsDDL(): String = schema.fields.map(f => s"${quoteIdentifier(f.name.toLowerCase)} ${f.dataType.sql}").mkString(",")
+    def toRdsDDL: String = schema.fields.map(f => s"${quoteIdentifier(f.name.toLowerCase)} ${f.dataType.sql}").mkString(",")
 
   }
 
