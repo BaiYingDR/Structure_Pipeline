@@ -48,7 +48,7 @@ object SpOperatorFactory extends Logging {
     }
   }
 
-  def getTransformer(name: String, map: Map[String, Any]): Transformer = {
+  def getTransformer(name: String, params: Map[String, Any]): Transformer = {
     name match {
       case "dfJoinTransformer" => beanFromMap[JoinTransformer](params)
       case "dfSparkSQLTransformer" => beanFromMap[SparkSQLTransformer](params)
@@ -96,7 +96,7 @@ object SpOperatorFactory extends Logging {
     }
   }
 
-  def getMisc(name: String, map: Map[String, Any]): Misc = {
+  def getMisc(name: String, params: Map[String, Any]): Misc = {
     name match {
       case "batchAuditor" => beanFromMap[BatchAuditor](params)
       case "offsetSaver" => beanFromMap[OffsetWriter](params)
